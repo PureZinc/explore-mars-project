@@ -8,14 +8,27 @@ const sortBtn = document.querySelectorAll('button.sortBtn');
 const totalSol = document.getElementById('total-sol');
 const favTotalSol = document.getElementById('fav-total-sol');
 
+const defaultPageNum = 2;
+
+const searchPageInput = document.getElementById('page-num');
+const searchPageButton = document.getElementById('search-page-button')
+
+searchPageInput.setAttribute('placeholder', defaultPageNum);
+
+const clearFavsButton = document.getElementById('clear-favs');
+
+const correspondingContainer = (solElm) => solElm === totalSol ? roverContainer : favRoverContainer;
+
 const favoritesName = 'favs';
 let favoritesIds;
+const putFavesInLocalStorage = () => localStorage.setItem(favoritesName, JSON.stringify(favoritesIds));
+
 try {
     favoritesIds = JSON.parse(localStorage.getItem(favoritesName)) || [];
 } catch (error) {
     console.error("Error while getting favoriteIds:", error);
     favoritesIds = [];
-    localStorage.setItem(favoritesName, JSON.stringify(favoritesIds));
+    putFavesInLocalStorage();
 }
 
 const addToLocalStorage = (id) => {
@@ -24,7 +37,14 @@ const addToLocalStorage = (id) => {
     } else {
         favoritesIds.push(id);
     }
-    localStorage.setItem(favoritesName, JSON.stringify(favoritesIds));
+    putFavesInLocalStorage();
+}
+
+const clearFavs = () => {
+    favoritesIds = [];
+    putFavesInLocalStorage();
+    favRoverContainer.innerHTML = '';
+    initSolSums();
 }
 
 const initSolSums = () => {
@@ -36,7 +56,7 @@ const initSolSums = () => {
     }
 
     [totalSol, favTotalSol].forEach((sol) => {
-        sol.innerHTML = `Total Sol: ${addTotalSol(roverContainer)}`;
+        sol.innerHTML = `Total Sol: ${addTotalSol(correspondingContainer(sol))}`;
     })
 }
 
@@ -109,7 +129,7 @@ const getApiLink = (page, key) => {
 
 const roverPhotos = async (page) => {
     const link =  getApiLink(page, API_KEY);
-    console.log(link);
+
     return await fetch(link)
     .then((data) => {
         if (!data.ok) {
@@ -123,12 +143,16 @@ const roverPhotos = async (page) => {
     });
 }
 
-roverPhotos(2).then((data) => {
-    for (const photo of data.photos) {
-        createPicElements(photo, favoritesIds.includes(photo.id));
-    }
-    initSolSums();
-});
+const fetchPhotosByPage = (page) => {
+    roverPhotos(page).then((data) => {
+        for (const photo of data.photos) {
+            createPicElements(photo, favoritesIds.includes(photo.id));
+        }
+        initSolSums();
+    });
+}
+
+fetchPhotosByPage(defaultPageNum);
 
 const handleImageClick = (e) => {
     const imgContainer = e.target.closest('.img-container');
@@ -137,5 +161,29 @@ const handleImageClick = (e) => {
     addToLocalStorage(imgContainer.id);
 };
 
+const showConfirmationModal = (onConfirm) => {
+    const len = favoritesIds.length;
+    document.getElementById('favCount').innerText = len;
+    const modal = document.getElementById('confirmationModal');
+    modal.style.display = 'block';
+
+    document.getElementById('confirmBtn').onclick = () => {
+        onConfirm();
+        modal.style.display = 'none';
+    };
+
+    document.getElementById('cancelBtn').onclick = () => {
+        modal.style.display = 'none';
+    };
+};
+
 roverContainer.addEventListener('click', handleImageClick);
 favRoverContainer.addEventListener('click', handleImageClick);
+clearFavsButton.addEventListener('click', () => {
+    showConfirmationModal(clearFavs);
+});
+searchPageButton.addEventListener('click', () => {
+    const value = searchPageInput.value ? searchPageInput.value : defaultPageNum;
+    roverContainer.innerHTML = '';
+    fetchPhotosByPage(value);
+})

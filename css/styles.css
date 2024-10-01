@@ -75,6 +75,12 @@
     border: 2px dashed black;
     padding: 10px;
     border-radius: 10px;
+    transition: 0.4s;
+}
+
+.buttons button:hover {
+    size: 10%;
+    cursor: pointer;
 }
 
 @media (max-width: 1024px) {

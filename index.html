@@ -31,14 +31,22 @@
                 </div>
             </nav>
 
-            <div class="nav-outlier"></div>
-
             <header>
-                <h1>Rover: Curiosity</h1>
-                <p>Launched Nov 26, 2011. Landed August 6, 2012.</p>
+                <div class="container">
+                    <h1 class="black-ops">Rover: Curiosity</h1>
+                    <p>Launched Nov 26, 2011. Landed August 6, 2012.</p>
+                </div>
             </header>
 
             <section class="pics">
+                <div class="block-text">
+                    <h1 class="black-ops">Curiosity's Pictures of Mars</h1>
+                    <form>
+                        <label for="page-num">Page Number: </label>
+                        <input type="number" id="page-num">
+                        <button type="button" id="search-page-button"><i class="fas fa-search"></i> Search</button>
+                    </form>
+                </div>
                 <div class="sorting">
                     <ul class="buttons">
                         <li><button class="sortBtn" id="a-z">ID <i class="fas fa-arrow-up"></i></button></li>
@@ -51,6 +59,9 @@
 
                 <br><hr><br>
 
+                <ul class="buttons">
+                    <li><button id="clear-favs">Clear Favorites</button></li>
+                </ul>
                 <h2>Faves</h2>
                 <div class="pic-container" id="favRovers"></div>
                 <h3 id="fav-total-sol"></h3>
@@ -58,7 +69,13 @@
 
         </main>
 
-        <div id="modals"></div>
+        <div id="modals">
+            <div id="confirmationModal" style="display: none;">
+                <p>Are you sure you want to delete all <span id="favCount"></span> favorites?</p>
+                <button id="confirmBtn">Yes</button>
+                <button id="cancelBtn">No</button>
+            </div>
+        </div>
 
         <script src="js/config.js"></script>
         <script src="js/main.js"></script>

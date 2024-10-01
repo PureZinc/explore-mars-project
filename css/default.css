@@ -1,3 +1,7 @@
+:root {
+    --main-color: background-color: rgb(254, 184, 79);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -12,6 +16,59 @@ h2 {
     color: red;
 }
 
-section {
-    margin:  20px 50px;
+ul {
+    list-style: none;
+}
+
+section, header {
+    padding:  20px 50px;
+}
+
+header {
+    background-image: url('http://upload.wikimedia.org/wikipedia/commons/d/d8/NASA_Mars_Rover.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    padding: 200px 30px;
+}
+
+header .container {
+    margin: auto 200px;
+    padding: 40px;
+    background-color: rgb(254, 184, 79);
+    border-radius: 50%;
+    border: 2px dashed black;
+    transition: 0.4s;
+}
+
+header .container:hover {
+    opacity: 0;
+}
+
+.black-ops {
+    font-family: 'Black Ops One', 'sans-seriff';
+}
+
+.block-text {
+    margin: 50px 10px;
+}
+
+#confirmationModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: white;
+    border: 2px dashed black;
+}
+
+@media (max-width: 768px) {
+    header .container {
+        margin: auto;
+        padding: 40px;
+        background-color: var(--main-color);
+        border-radius: 50%;
+        border: 2px dashed black;
+    }
 }

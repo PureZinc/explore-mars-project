@@ -21,7 +21,10 @@ const correspondingContainer = (solElm) => solElm === totalSol ? roverContainer 
 
 const favoritesName = 'favs';
 let favoritesIds;
-const putFavesInLocalStorage = () => localStorage.setItem(favoritesName, JSON.stringify(favoritesIds));
+const putFavesInLocalStorage = () => {
+    console.log("Saving favorites to local storage:", favoritesIds);
+    localStorage.setItem(favoritesName, JSON.stringify(favoritesIds));
+};
 
 try {
     favoritesIds = JSON.parse(localStorage.getItem(favoritesName)) || [];
@@ -89,6 +92,11 @@ for (const btn of sortBtn) {
 
 }
 
+const toggleButtonText = (btn, condition) => {
+    const isFavorited = condition === undefined ? btn.innerText === "Add to Faves" : condition;
+    btn.innerText = isFavorited ? "Remove from Faves" : "Add to Faves";
+};
+
 const createPicElements = (photoData, isInFavorites=false) => {
     const container = isInFavorites ? favRoverContainer: roverContainer;
 
@@ -114,8 +122,7 @@ const createPicElements = (photoData, isInFavorites=false) => {
     roverSol.innerHTML = 'Total Sol: ' + photoData.sol;
 
     const toFavs = document.createElement('button');
-    const favsInner = isInFavorites ? "Remove from Favs" : "Add to Favs";
-    toFavs.innerHTML = favsInner;
+    toggleButtonText(toFavs, isInFavorites);
 
     popUp.append(roverName, roverElement, roverSol, toFavs);
     imgContainer.append(roverImg, popUp);
@@ -146,7 +153,7 @@ const roverPhotos = async (page) => {
 const fetchPhotosByPage = (page) => {
     roverPhotos(page).then((data) => {
         for (const photo of data.photos) {
-            createPicElements(photo, favoritesIds.includes(photo.id));
+            createPicElements(photo, favoritesIds.includes(String(photo.id)));
         }
         initSolSums();
     });
@@ -155,10 +162,14 @@ const fetchPhotosByPage = (page) => {
 fetchPhotosByPage(defaultPageNum);
 
 const handleImageClick = (e) => {
-    const imgContainer = e.target.closest('.img-container');
-    if (!imgContainer) return;
-    updateFavPics(imgContainer);
-    addToLocalStorage(imgContainer.id);
+    if (e.target.matches('button')) {
+        const t = e.target;
+        const imgContainer = t.closest('.img-container');
+        if (!imgContainer) return;
+        toggleButtonText(t);
+        updateFavPics(imgContainer);
+        addToLocalStorage(imgContainer.id);
+    }
 };
 
 const showConfirmationModal = (onConfirm) => {

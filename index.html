@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Explore Mars</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
+
+        <script src="https://kit.fontawesome.com/7553ba3b1a.js" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="css/default.css">
+        <link rel="stylesheet" href="css/nav.css">
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+    <body>
+        <main>
+            <nav class="navbar">
+                <div class="container">
+                    <h3 class="nav-brand">Explore Mars</h3>
+                    <ul id="dropdownNav" class="nav-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                    <button class="nav-bars" aria-expanded="false" aria-controls="dropdownNav">&#9776;</button>
+                </div>
+            </nav>
+
+            <div class="nav-outlier"></div>
+
+            <header>
+                <h1>Rover: Curiosity</h1>
+                <p>Launched Nov 26, 2011. Landed August 6, 2012.</p>
+            </header>
+
+            <section class="pics">
+                <div class="sorting">
+                    <ul class="buttons">
+                        <li><button class="sortBtn" id="a-z">A - Z</button></li>
+                        <li><button class="sortBtn" id="z-a">Z - A</button></li>
+                    </ul>
+                </div>
+                <h2 style="color: greenyellow;">All Photos</h2>
+                <div class="pic-container" id="rovers"></div>
+                <h3 id="total-sol"></h3>
+
+                <br><hr><br>
+
+                <h2>Faves</h2>
+                <div class="pic-container" id="favRovers"></div>
+                <h3 id="fav-total-sol"></h3>
+            </section>
+
+        </main>
+
+        <div id="modals"></div>
+
+        <script src="js/config.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>

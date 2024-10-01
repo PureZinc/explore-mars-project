@@ -1,0 +1,72 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 500;
+    padding: 1rem;
+    color: black;
+    font-family: "Hind", "sans-serif";
+}
+
+.navbar ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+}
+
+.navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.navbar a {
+    text-decoration: none;
+    margin-right: 1.5rem;
+    color: black;
+}
+
+[aria-controls="dropdownNav"] {
+    display: none;
+}
+
+.bg-header, 
+.video-demo {
+    background-color: rgb(31, 31, 31);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 20%;
+    position: relative;
+    padding: 4.38rem 0;
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    .navbar ul {
+        flex-direction: column;
+        width: 100%;
+        background-color: black;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        text-align: center;
+    }
+
+    .nav-bars {
+        display: block;
+    }
+
+    #dropdownNav {
+        display: none;
+    }
+
+    .nav-bars[aria-expanded="true"] + #dropdownNav {
+        display: flex;
+    }
+
+
+    .nav-links li {
+        padding: 1rem;
+    }
+}

@@ -8,13 +8,14 @@ const sortBtn = document.querySelectorAll('button.sortBtn');
 const totalSol = document.getElementById('total-sol');
 const favTotalSol = document.getElementById('fav-total-sol');
 
+const favoritesName = 'favs';
 let favoritesIds;
 try {
-    favoritesIds = JSON.parse(localStorage.getItem('favs')) || [];
+    favoritesIds = JSON.parse(localStorage.getItem(favoritesName)) || [];
 } catch (error) {
     console.error("Error while getting favoriteIds:", error);
     favoritesIds = [];
-    localStorage.setItem('favs', JSON.stringify(favoritesIds));
+    localStorage.setItem(favoritesName, JSON.stringify(favoritesIds));
 }
 
 const addToLocalStorage = (id) => {
@@ -23,7 +24,7 @@ const addToLocalStorage = (id) => {
     } else {
         favoritesIds.push(id);
     }
-    localStorage.setItem('favs', JSON.stringify(favoritesIds));
+    localStorage.setItem(favoritesName, JSON.stringify(favoritesIds));
 }
 
 const initSolSums = () => {
@@ -103,17 +104,27 @@ const createPicElements = (photoData, isInFavorites=false) => {
 }
 
 const getApiLink = (page, key) => {
-    return `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=${page}&api_key=${API_KEY}`;
+    return `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=${page}&api_key=${key}`;
 }
 
 const roverPhotos = async (page) => {
     const link =  getApiLink(page, API_KEY);
+    console.log(link);
     return await fetch(link)
-    .then(data => data.json());
+    .then((data) => {
+        if (!data.ok) {
+            alert(`${page} is not accessible!`);
+            throw new Error(`Server returned with error code ${data.status}`);
+        }
+        return data.json();
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 }
 
 roverPhotos(2).then((data) => {
-    for (const photo of data.photos.slice(0, 40)) {
+    for (const photo of data.photos) {
         createPicElements(photo, favoritesIds.includes(photo.id));
     }
     initSolSums();
@@ -123,7 +134,7 @@ const handleImageClick = (e) => {
     const imgContainer = e.target.closest('.img-container');
     if (!imgContainer) return;
     updateFavPics(imgContainer);
-    addToLocalStorage(photoData.id);
+    addToLocalStorage(imgContainer.id);
 };
 
 roverContainer.addEventListener('click', handleImageClick);

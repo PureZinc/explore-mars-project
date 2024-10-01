@@ -9,31 +9,31 @@
     font-family: "Black Ops One", "sans-serif";
 }
 
-.navbar ul {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    list-style: none;
-}
-
 .navbar .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.navbar a {
+
+.nav-bars {
+    display: none;
+}
+
+.nav-links {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.nav-links a {
     text-decoration: none;
     margin-right: 1.5rem;
     color: black;
     transition: 0.4s;
 }
 
-.navbar a:hover {
+.nav-links a:hover {
     color: var(--main-color);
-}
-
-[aria-controls="dropdownNav"] {
-    display: none;
 }
 
 .bg-header, 
@@ -48,30 +48,30 @@
 }
 
 @media (max-width: 768px) {
-    .navbar ul {
-        flex-direction: column;
-        width: 100%;
-        background-color: black;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        text-align: center;
-    }
-
     .nav-bars {
         display: block;
+        border: none;
+        background-color: transparent;
+        z-index: 5;
     }
 
-    #dropdownNav {
+    .nav-links {
         display: none;
+        flex-direction: column;
+        justify-content: space-evenly;
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        background-color: var(--main-color);
     }
-
-    .nav-bars[aria-expanded="true"] + #dropdownNav {
+    
+    .nav-links.open {
         display: flex;
     }
 
-
-    .nav-links li {
-        padding: 1rem;
+    .nav-links a {
+        font-size: xx-large;
     }
 }

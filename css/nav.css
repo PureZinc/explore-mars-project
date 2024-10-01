@@ -25,6 +25,11 @@
     text-decoration: none;
     margin-right: 1.5rem;
     color: black;
+    transition: 0.4s;
+}
+
+.navbar a:hover {
+    color: var(--main-color);
 }
 
 [aria-controls="dropdownNav"] {

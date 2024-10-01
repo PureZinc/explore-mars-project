@@ -41,9 +41,9 @@
             <section class="pics">
                 <div class="block-text">
                     <h1 class="black-ops">Curiosity's Pictures of Mars</h1>
-                    <form>
-                        <label for="page-num">Page Number: </label>
-                        <input type="number" id="page-num">
+                    <form id="page-num-form">
+                        <label class="black-ops" for="page-num">Page Number: </label>
+                        <input type="number" id="page-num" min="1" max="25">
                         <button type="button" id="search-page-button"><i class="fas fa-search"></i> Search</button>
                     </form>
                 </div>
@@ -59,12 +59,12 @@
 
                 <br><hr><br>
 
-                <ul class="buttons">
-                    <li><button id="clear-favs">Clear Favorites</button></li>
-                </ul>
                 <h2>Faves</h2>
                 <div class="pic-container" id="favRovers"></div>
                 <h3 id="fav-total-sol"></h3>
+                <ul class="buttons">
+                    <li><button id="clear-favs">Clear Favorites</button></li>
+                </ul>
             </section>
 
         </main>

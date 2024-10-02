@@ -4,5 +4,5 @@
 
 
 const KEYS = {
-    nasa: process.env.API_KEY,
+    nasa: 'DEMO_KEY',
 }
